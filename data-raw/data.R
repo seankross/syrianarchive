@@ -151,7 +151,7 @@ violations <- syrian_archive %>%
 
 base_url <- "https://syrianarchive.org"
 
-page_urls <- paste0(base_url, "/database/?page=", 1)
+page_urls <- paste0(base_url, "/database/?page=", 1:2)
 
 get_db_ids <- . %>%
   read_html() %>%
@@ -249,6 +249,8 @@ new_page_violations <- new_page %>%
   select(-recording_am_pm) %>%
   mutate(latitude = map_dbl(latitude, coord)) %>%
   mutate(longitude = map_dbl(longitude, coord))
+
+load("data/violations.rda")
 
 violations <- new_page_violations %>%
   bind_rows(violations) %>%
