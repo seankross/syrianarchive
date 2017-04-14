@@ -2,7 +2,7 @@ Package: syrianarchive
 Title: A collection of evidence of human rights violations from the Syrian Civial War.
 Version: 0.0.0.9000
 Authors@R: person("Sean", "Kross", email = "sean@seankross.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: The Syrian Archive is an evidence gathering effort
 Depends:
     R (>= 3.3.2)
 Suggests:
