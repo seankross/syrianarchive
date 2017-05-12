@@ -151,7 +151,7 @@ violations <- syrian_archive %>%
 
 base_url <- "https://syrianarchive.org"
 
-page_urls <- paste0(base_url, "/database/?page=", 1:2)
+page_urls <- paste0(base_url, "/database/?page=", 1:5)
 
 get_db_ids <- . %>%
   read_html() %>%
@@ -254,7 +254,15 @@ load("data/violations.rda")
 
 violations <- new_page_violations %>%
   bind_rows(violations) %>%
+  select_if(function(col) sum(!is.na(col)) > 50) %>%
   distinct()
+
+colnames(violations) <- colnames(violations) %>%
+  str_replace_all("_", " ") %>%
+  str_to_title() %>%
+  str_replace_all("Id", "ID") %>%
+  str_replace_all("Url", "URL") %>%
+  str_replace_all(" ", "_")
 
 ###############
 ###############

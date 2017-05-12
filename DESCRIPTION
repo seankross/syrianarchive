@@ -1,6 +1,7 @@
 Package: syrianarchive
-Title: A collection of evidence of human rights violations from the Syrian Civial War.
-Version: 0.0.0.9000
+Title: Evidence collected from the internet about human rights violations from
+    the Syrian Civial War
+Version: 0.0.0.9006
 Authors@R: person("Sean", "Kross", email = "sean@seankross.com", role = c("aut", "cre"))
 Description: The Syrian Archive is an evidence gathering effort
 Depends:
@@ -18,3 +19,4 @@ Suggests:
 License: CC BY-SA 4.0
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 5.0.1
