@@ -252,20 +252,65 @@ new_page_violations <- new_page %>%
 
 load("data/violations.rda")
 
-violations <- new_page_violations %>%
-  bind_rows(violations) %>%
-  select_if(function(col) sum(!is.na(col)) > 50) %>%
-  distinct()
-
-colnames(violations) <- colnames(violations) %>%
+colnames(new_page_violations) <- colnames(new_page_violations) %>%
   str_replace_all("_", " ") %>%
   str_to_title() %>%
   str_replace_all("Id", "ID") %>%
   str_replace_all("Url", "URL") %>%
   str_replace_all(" ", "_")
 
+violations <- new_page_violations %>%
+  bind_rows(violations) %>%
+  select_if(function(col) sum(!is.na(col)) > 50) %>%
+  distinct() %>%
+  mutate(City = str_to_title(City))
+
 ###############
 ###############
 
 write_csv(violations, "data-raw/violations.csv")
 use_data(violations, overwrite = TRUE)
+
+############
+## Places ##
+############
+
+library(jsonlite)
+
+get_geocode_url <- function(x){
+  paste0("http://maps.googleapis.com/maps/api/geocode/json?address=", x, "&sensor=false")
+}
+
+syrian_places <- violations %>%
+  select(City, Neighborhood) %>%
+  distinct() %>%
+  filter(!is.na(City) & !is.na(Neighborhood)) %>%
+  unite(Place, City, Neighborhood, sep = "+", remove = FALSE) %>%
+  mutate(Place = str_replace_all(Place, "\\s", "+")) %>%
+  mutate(Place = paste0(Place, "+Syria"))
+
+# This takes a while
+if(nrow(syrian_places) != 310){
+  geocoded_places <- map(syrian_places$Place, ~ fromJSON(get_geocode_url(.x)))
+}
+
+syrian_places$Latitude <- map_dbl(geocoded_places, ~
+                                    if(.x$status != "OK"){
+                                      NA
+                                    } else {
+                                      .x$results$geometry$location$lat[1]
+                                    })
+
+syrian_places$Longitude <- map_dbl(geocoded_places, ~
+                                     if(.x$status != "OK"){
+                                       NA
+                                     } else {
+                                       .x$results$geometry$location$lng[1]
+                                     })
+syrian_places <- syrian_places %>%
+  select(-Place) %>%
+  filter(!is.na(Latitude) & !is.na(Longitude)) %>%
+  filter(!is.na(City) & !is.na(Neighborhood))
+
+write_csv(syrian_places, "data-raw/syrian_places.csv")
+use_data(syrian_places, overwrite = TRUE)

@@ -1,9 +1,12 @@
 Package: syrianarchive
-Title: Evidence collected from the internet about human rights violations from
-    the Syrian Civial War
-Version: 0.0.0.9006
+Title: Evidence of Human Rights Violations from the Syrian Civial War
+Version: 0.0.0.9010
 Authors@R: person("Sean", "Kross", email = "sean@seankross.com", role = c("aut", "cre"))
-Description: The Syrian Archive is an evidence gathering effort
+Description: The Syrian Archive is an evidence gathering effort with the goal of
+    collecting and documenting videos depicting atrocities committed during the
+    Syrian Civil War. This data package is inteded to be used for creating 
+    awareness about the humanitarian cost of the conflict through analysis and
+    visualization. See <https://syrianarchive.org/> for more information.
 Depends:
     R (>= 3.3.2)
 Suggests:
@@ -15,7 +18,8 @@ Suggests:
     tidyr,
     readr,
     lubridate,
-    devtools
+    devtools,
+    jsonlite
 License: CC BY-SA 4.0
 Encoding: UTF-8
 LazyData: true

@@ -36,7 +36,8 @@ violations
 }
 \description{
 The Syrian Archive contains a record of of videos uploaded to the internet
-by witnesses of the Syrian Civil War. Each row
+by witnesses of the Syrian Civil War. Each row contains metadata for a
+verified video.
 }
 \examples{
  violations

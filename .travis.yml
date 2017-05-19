@@ -1,5 +1,15 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+language: r
 
-language: R
+matrix:
+  include:
+  - r: release
+  - r: oldrel
+  - r: devel
+
 sudo: false
 cache: packages
+
+notifications:
+  email:
+    on_success: always
+    on_failure: always

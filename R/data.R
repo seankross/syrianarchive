@@ -1,7 +1,8 @@
 #' Observations of Human Rights Violations
 #'
 #' The Syrian Archive contains a record of of videos uploaded to the internet
-#' by witnesses of the Syrian Civil War. Each row
+#' by witnesses of the Syrian Civil War. Each row contains metadata for a
+#' verified video.
 #'
 #' @source \url{https://syrianarchive.org/}, downloaded 2017-05-12
 #' @format A data frame with columns:
@@ -32,3 +33,18 @@
 #' @examples
 #'  violations
 "violations"
+
+#' Latitude and Longitude Data for Locations in Syria
+#'
+#' @source Google's geocoding API
+#' @format A data frame with columns:
+#' \describe{
+#'  \item{City}{Name of City.}
+#'  \item{Neighborhood}{Name of area.}
+#'  \item{Latitude}{Latitude of location.}
+#'  \item{Longitude}{Longitude of location.}
+#' }
+#'
+#' @examples
+#'  syrian_places
+"syrian_places"
